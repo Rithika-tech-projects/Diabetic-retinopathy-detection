@@ -51,4 +51,33 @@ HTTP (Hypertext Transfer Protocol) log files store information about web server 
 
 ---
 
-### Step 3: Verify Data Upload
+# Step 3: Verify Data Upload
+index=<your_index>
+
+# View All HTTP Events
+index=<your_index> sourcetype=<your_sourcetype>
+
+# Analyze Request Methods
+index=<your_index> sourcetype=<your_sourcetype>
+| stats count by method
+
+# Find Top URLs
+index=<your_index> sourcetype=<your_sourcetype>
+| top uri
+
+# Check Response Status Codes
+index=<your_index> sourcetype=<your_sourcetype>
+| stats count by status
+
+# Detect Errors
+index=<your_index> sourcetype=<your_sourcetype>
+| where status >= 400
+
+# Monitor Suspicious IP Activity
+index=<your_index> sourcetype=<your_sourcetype>
+| search src_ip="suspicious_ip"
+
+# Analyze User Behavior (Failed Logins)
+index=<your_index> sourcetype=<your_sourcetype>
+| search action="login" status="failed"
+| stats count by user
