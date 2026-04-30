@@ -1,0 +1,99 @@
+===============================
+SPLUNK QUERIES FOR HTTP LOG ANALYSIS
+===============================
+
+1. VERIFY DATA UPLOAD
+-------------------------------
+index=<your_index>
+
+-------------------------------
+
+2. VIEW ALL HTTP EVENTS
+-------------------------------
+index=<your_index> sourcetype=<your_sourcetype>
+
+-------------------------------
+
+3. ANALYZE REQUEST METHODS (GET, POST)
+-------------------------------
+index=<your_index> sourcetype=<your_sourcetype>
+| stats count by method
+
+-------------------------------
+
+4. FIND TOP ACCESSED URLS
+-------------------------------
+index=<your_index> sourcetype=<your_sourcetype>
+| top uri
+
+-------------------------------
+
+5. ANALYZE RESPONSE STATUS CODES
+-------------------------------
+index=<your_index> sourcetype=<your_sourcetype>
+| stats count by status
+
+-------------------------------
+
+6. DETECT ERROR RESPONSES (STATUS >= 400)
+-------------------------------
+index=<your_index> sourcetype=<your_sourcetype>
+| where status >= 400
+
+-------------------------------
+
+7. MONITOR SUSPICIOUS IP ACTIVITY
+-------------------------------
+index=<your_index> sourcetype=<your_sourcetype>
+| stats count by src_ip
+| sort - count
+
+-------------------------------
+
+8. SEARCH FOR A SPECIFIC SUSPICIOUS IP
+-------------------------------
+index=<your_index> sourcetype=<your_sourcetype>
+| search src_ip="192.168.1.20"
+
+-------------------------------
+
+9. DETECT FAILED LOGIN ATTEMPTS
+-------------------------------
+index=<your_index> sourcetype=<your_sourcetype>
+| search uri="/login" status=401
+| stats count by src_ip
+
+-------------------------------
+
+10. ANALYZE TRAFFIC OVER TIME
+-------------------------------
+index=<your_index> sourcetype=<your_sourcetype>
+| timechart span=1h count
+
+-------------------------------
+
+11. FIND MOST ACTIVE USERS (IP-BASED)
+-------------------------------
+index=<your_index> sourcetype=<your_sourcetype>
+| stats count by src_ip
+| sort - count
+
+-------------------------------
+
+12. ANALYZE REQUEST METHODS OVER TIME
+-------------------------------
+index=<your_index> sourcetype=<your_sourcetype>
+| timechart span=1h count by method
+
+-------------------------------
+
+13. FIND HIGH ERROR RATE IPS
+-------------------------------
+index=<your_index> sourcetype=<your_sourcetype> status>=400
+| stats count by src_ip
+| sort - count
+
+-------------------------------
+
+END OF QUERIES
+===============================
